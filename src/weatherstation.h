@@ -3,11 +3,18 @@
 #ifndef WEATHERSTATION_H
 #define WEATHERSTATION_H
 
-// define 
+// define
+
 // include 
-// TODO: include Arduino Core libraries
+// TODO: include Arduino Core libraries 
+// #include "Arduino.h"
 // TODO: include NRFLite source header files in NRF24 folder
+// #include "nrflite/NRFLite.h"
+// TODO: include sensor module libraries
+// #include "sensors/HRCS04.h"
+
 enum type {};
+
 class weatherstation {
     // default constructor
     public:
