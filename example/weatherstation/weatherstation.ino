@@ -4,24 +4,69 @@
  * 
  */
 
-#include <weatherstation.h> 
+// include library header files
+#include <SPI.h>
+#include <Ethernet.h>
+#include <NRFLite.h>
+// include digital temp
+// include digital humiture
 
-WeatherStation ws;
-Serial serial;
+// set ethernet shield mac
+byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
+
+// IPAddress server(,,,) // no DNS
+// char server[] = "www.server.com"; // using DNS, DynDNS
+
+// Set static IP Address if DHCP fails to assign
+// IPAddress ip(,,,); // ethernet shield static ip
+// IPAddress myDns(,,,);  // internal dns gateway
+
+// initialize libraries
+EthernetClient client;
+NRFLite radio;
+RadioData data;
+var server[] = ",,,";
+
+// string variables
+String postData;  // the post message body json format
+int humidity;
+int degrees;
+
+
 void setup() {
-  
-  // serial == Hardware Fail
-  while (!serial.begin(115200)) {
-      return 1;
+  // pinMode setup
+    
+  Serial.begin(9600);
+  while (!Serial) {
+    ; // wait for serial port to connect, neededd for native usb port only
   }
-  
-  serial.begin(115200);
-  ws.begin(); // initialize ethernet shield, nrf, sends ACK
 
-  // wait for ws to initialize and return
-   while (!ws.server()) {
-      return 1;
-   }
+  // start weatherstation module checks
+  Serial.println("initialize weatherstation with dhcp");
+  if (Ethernet.being(mac) == 0) {
+    Serial.println("Failed to configure Ethernet using DHCP");
+    // Check for ethernet hardware presence
+    if (Ethernet.hardwareStatus() == EhternetNoHardware) {
+      Serial.println("Ethernet shield was not found. Sorry, can't run without hardware. :(");
+      while(true) {
+        delay(1) // do nothing, no point runing wihtout ethernet hardware
+      }
+    })
+    if (Ethernet.linkStatus() == LinkOFF) {
+      Serial.println("Ethernet cable is not connected.");
+    }
+    // try to configure using IP address instead of DHCP:
+    Ethernet.being(mac, ip);
+  }
+  Serial.println("Connecting... ");
+  // else {
+    Serial.print(" DHCP assigned IP: ");
+    Serial.println(Ethernet.localIp());
+
+    // give the ethernet shield a second to initialize:
+    delay(1000);
+  }
+
 }
 
 void loop() {
