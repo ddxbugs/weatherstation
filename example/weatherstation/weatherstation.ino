@@ -8,8 +8,6 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <NRFLite.h>
-// include digital temp
-// include digital humiture
 
 // set ethernet shield mac
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
@@ -20,6 +18,10 @@ byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
 // Set static IP Address if DHCP fails to assign
 // IPAddress ip(,,,); // ethernet shield static ip
 // IPAddress myDns(,,,);  // internal dns gateway
+
+int temperature = 1; // set temperature sensor pin 1
+int humiture = 2; // set humiture sensor pin 2
+int light = 3; // set photoresistor pin 3
 
 // initialize libraries
 EthernetClient client;
